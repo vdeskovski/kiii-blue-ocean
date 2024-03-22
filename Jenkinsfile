@@ -4,13 +4,13 @@ node {
         checkout scm
     }
     stage('Build image') {
-       app = docker.build(mjovanovikkiii-jenkins)
+       app = docker.build("vdeskovski/KIII-blue-ocean")
     }
     stage('Push image') {   
-        docker.withRegistry('httpsregistry.hub.docker.com', 'dockerhub') {
-            app.push(${env.BRANCH_NAME}-${env.BUILD_NUMBER})
-            app.push(${env.BRANCH_NAME}-latest)
-             signal the orchestrator that there is a new version
+        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') { // dockerhub credentials
+            app.push("${env.BRANCH_NAME}-${env.BUILD_NUMBER}")
+            app.push("${env.BRANCH_NAME}-latest")
+             //signal the orchestrator that there is a new version
         }
     }
 }
