@@ -4,9 +4,19 @@ node {
         checkout scm
     }
     stage('Build image') {
+		when {
+			expression {
+				BRANCH_NAME == 'dev'
+			}
+		}
        app = docker.build("vdeskovski/kiii-blue-ocean")
     }
     stage('Push image') {
+		when {
+				expression {
+					BRANCH_NAME == 'dev'
+				}
+			}
         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
             app.push("${env.BRANCH_NAME}-${env.BUILD_NUMBER}")
             app.push("${env.BRANCH_NAME}-latest")
