@@ -1,11 +1,5 @@
 node {
     def app
-		triggers {
-        // Trigger the pipeline when changes occur on the 'dev' branch
-        changeRequest {
-            branch('dev')
-        }
-    }
     stage('Clone repository') {
         checkout scm
     }
